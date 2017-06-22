@@ -1,20 +1,20 @@
 <template>
   <div class="all">
-     <div class="positionTop">
-       <header class="header-wrapper">
-         <div class="header-left"><i class="icon-mike"></i></div>
-         <div class="header-middle"><i class="icon-search"></i>搜索音乐、歌词、电台</div>
-         <div class="header-right"><i class="icon-state"></i></div>
-       </header>
-       <div class="nav" ref="hookRun">
-         <div class="nav-title" :class="{'active': active == 0}"><span @click="choiceNav(0,$event)">个性推荐</span></div>
-         <div class="nav-title" :class="{'active': active == 1}"><span @click="choiceNav(1,$event)">歌单</span></div>
-         <div class="nav-title" :class="{'active': active == 2}"><span @click="choiceNav(2,$event)">主播电台</span></div>
-         <div class="nav-title" :class="{'active': active == 3}"><span @click="choiceNav(3,$event)">排行榜</span></div>
-         <div class="run-li" :style="runLink"></div>
-       </div>
-     </div>
-    <scroller>
+    <div class="positionTop">
+      <header class="header-wrapper">
+        <div class="header-left"><i class="icon-mike"></i></div>
+        <div class="header-middle"><i class="icon-search"></i>搜索音乐、歌词、电台</div>
+        <div class="header-right"><i class="icon-state"></i></div>
+      </header>
+      <div class="nav" ref="hookRun">
+        <div class="nav-title" :class="{'active': active == 0}"><span @click="choiceNav(0,$event)">个性推荐</span></div>
+        <div class="nav-title" :class="{'active': active == 1}"><span @click="choiceNav(1,$event)">歌单</span></div>
+        <div class="nav-title" :class="{'active': active == 2}"><span @click="choiceNav(2,$event)">主播电台</span></div>
+        <div class="nav-title" :class="{'active': active == 3}"><span @click="choiceNav(3,$event)">排行榜</span></div>
+        <div class="run-li" :style="runLink"></div>
+      </div>
+    </div>
+    <scroller1>
       <div class="content_main">
         <swiper :options="swiperOption" ref="swiper" class="swiperOption">
           <swiper-slide class="swiper-slide">
@@ -30,9 +30,8 @@
             <ranking></ranking>
           </swiper-slide>
         </swiper>
-
       </div>
-    </scroller>
+    </scroller1>
 
     <v-footer></v-footer>
   </div>
@@ -44,11 +43,12 @@
   import station from './page/station';
   import ranking from './page/ranking';
   import footer from 'components/footer/footer';
-  import* as service from '../../service';
+  import * as service from '../../service';
   export default {
     data() {
       return {
         active: 0,
+        height: 0,
         swiperOption: {
           // NotNextTick is a component's own property, and if notNextTick is set to true, the component will not instantiate the swiper through NextTick, which means you can get the swiper object the first time (if you need to use the get swiper object to do what Things, then this property must be true)
           // notNextTick是一个组件自有属性，如果notNextTick设置为true，组件则不会通过NextTick来实例化swiper，也就意味着你可以在第一时间获取到swiper对象，假如你需要刚加载遍使用获取swiper对象来做什么事，那么这个属性一定要是true
@@ -122,14 +122,13 @@
   .all
     width 100%
     height 100%
-    overflow hidden
     display flex
     flex-flow column
     .positionTop
       width: 100%;
       height: 84px;
       flex 0 0 84px
-      position: absolute;
+      position: fixed;
       z-index 2000
       .header-wrapper
         width 100%
@@ -193,12 +192,10 @@
           bottom: 0
           transition all 0.3s ease
     .content_main
-      display flex
-      flex 1
       padding-top 84px
       box-sizing border-box
       width 100%
-      flex-flow: row
+
 
 
 </style>
