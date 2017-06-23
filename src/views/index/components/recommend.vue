@@ -136,14 +136,9 @@
   .recommend
     width 100%
     height auto
-    margin-bottom 49px
+    padding-bottom 130px
     overflow hidden
     position relative
-    .swipers
-      position relative
-      .swiper-wrapper
-        overflow hidden !important
-        position relative !important
     .loading
       text-align center
       margin-top 60px
