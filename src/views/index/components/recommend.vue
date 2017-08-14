@@ -2,7 +2,7 @@
   <div class="recommend">
     <pulse-loader :loading="loading.load" :color="loading.color" :size="loading.size" :margin="loading.margin"
                   :radius="loading.radius" class="loading" v-show="loading.load"></pulse-loader>
-    <span v-if="!loading.load">
+    <span v-if="!loading.load" class="recommend_wrapper">
       <v-swiper :banner="banner" :isBanner="IsBanner" class="swipers"></v-swiper>
       <ul class="recommend-nav">
         <li>
@@ -30,6 +30,7 @@
   import swiper from 'components/swiper/swiper';
   import list from 'components/list/list';
   import PulseLoader from 'vue-spinner/src/BeatLoader.vue';
+  import {axios} from '@/router/config';
   import {mapState, mapGetters, mapMutations, mapActions} from 'vuex';
   const ERR_OK = 200;
   export default {
@@ -37,7 +38,7 @@
       return {
         loading: {
           color: "#f63",
-          size: '10  px',
+          size: '10px',
           margin: '3px',
           radius: '50%',
           load: true
@@ -56,8 +57,7 @@
     },
     created() {
       /* 获取banner */
-      this.$axios.get('/api/banner').then((response) => {
-        response = response.data;
+      axios('get', '/banner', {}, (response) => {
         if (response.code === ERR_OK) {
           setTimeout(() => {
             this.loading.load = false;
@@ -66,36 +66,32 @@
         }
       });
       /* 获取推荐歌单 */
-      this.$axios.get('/api/personalized').then((response) => {  /* */
-        response = response.data;
+      axios('get', '/personalized', {}, (response) => {
         if (response.code === ERR_OK) {
           this.recommend = response.result;
         }
       });
       /* 独家放送 */
-      this.$axios.get('/api/personalized/privatecontent').then((response) => {
-        response = response.data;
+      axios('get', 'personalized/privatecontent', {}, (response) => {
         if (response.code === ERR_OK) {
           this.privatecontent = response.result.reverse();
+          console.log(this.privatecontent);
         }
       });
       /* 最新音乐 */
-      this.$axios.get('/api/personalized/newsong').then((response) => {
-        response = response.data;
+      axios('get', 'personalized/newsong', {}, (response) => {
         if (response.code === ERR_OK) {
           this.newsong = response.result;
         }
       });
       /* 推荐MV */
-      this.$axios.get('/api/personalized/mv').then((response) => {
-        response = response.data;
+      axios('get', 'personalized/mv', {}, (response) => {
         if (response.code === ERR_OK) {
           this.mv = response.result;
         }
       });
       /* 精选电台 */
-      this.$axios.get('/api/dj/recommend').then((response) => {
-        response = response.data;
+      axios('get', 'dj/recommend', {}, (response) => {
         if (response.code === ERR_OK) {
           this.djRadios = response.djRadios;
         }
@@ -136,46 +132,50 @@
   .recommend
     width 100%
     height auto
-    padding-bottom 130px
+    padding-top 84px
     overflow hidden
     position relative
     .loading
       text-align center
       margin-top 60px
-    .recommend-nav
-      height 100px
-      display flex
-      background-image url(require('../../assets/image/repeat-x.png'))
-      background-repeat repeat-x
-      background-position left bottom
-      background-size auto 1px
-      justify-content space-around
-      li
-        position relative
-        flex 1
-        margin-top 15px
-        text-align center
-        font-size 0
-        .i
-          height 50px
-          width 50px
-          font-size 27px
-          border-radius 50%
-          line-height 52px
-          box-sizing border-box
-          border 1px solid #d33a31
-          color #d33a31
-          margin: 0 auto;
-          span
-            width 47px
+    .recommend_wrapper
+      width 100%
+      padding-bottom 30px
+      display inline-block
+      .recommend-nav
+        height 100px
+        display flex
+        background-image url(require('../../assets/image/repeat-x.png'))
+        background-repeat repeat-x
+        background-position left bottom
+        background-size auto 1px
+        justify-content space-around
+        li
+          position relative
+          flex 1
+          margin-top 15px
+          text-align center
+          font-size 0
+          .i
+            height 50px
+            width 50px
+            font-size 27px
+            border-radius 50%
+            line-height 52px
+            box-sizing border-box
+            border 1px solid #d33a31
+            color #d33a31
+            margin: 0 auto;
+            span
+              width 47px
+              font-size 12px
+              display block
+              line-height 55px
+              position absolute
+              top 0
+          p
             font-size 12px
-            display block
-            line-height 55px
-            position absolute
-            top 0
-        p
-          font-size 12px
-          line-height 1
-          margin-top 9px
-          color #323233
+            line-height 1
+            margin-top 9px
+            color #323233
 </style>

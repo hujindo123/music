@@ -4,28 +4,30 @@
     <ul class="list-data" v-if="recommend">
       <template v-for="(item, index) in recommend">
         <!-- 推荐歌单 -->
-        <li v-if="item.type===0" class='type-0'>
+        <li v-if="title === '推荐歌单'"class='type-0'>
           <img :src="item.picUrl" alt="">
           <p class="list-name">{{item.name}}</p>
-          <span class="type-0-span"><i class="icon-erji"></i> {{(parseInt(item.playCount) / 10000 < 10) ? item.playCount : (item.playCount / 10000).toFixed(0)+'万'}}</span>
+          <span class="type-0-span"><i
+            class="icon-erji"></i> {{(parseInt(item.playCount) / 10000 < 10) ? item.playCount : (item.playCount / 10000).toFixed(0) + '万'}}</span>
         </li>
         <!-- 独家放送 -->
-        <li v-if="item.type===24 || item.type===21" :class="index < 2 ? 'type-24': 'type-21'">
+        <li v-if="title === '独家放送'" :class="index === 2 ? 'type-21': 'type-24'">
           <img :src="item.picUrl" alt="">
           <p class="list-name">{{item.name}}</p>
-          <span  class="type-24-span"><i class="icon-mv"></i></span>
+          <span class="type-24-span"><i class="icon-mv"></i></span>
         </li>
         <!-- 最新音乐 -->
-        <li v-if="item.type===4"  :class="[{'type-4': item.type===4}]">
+        <li v-if="title === '最新音乐'" :class="[{'type-4': item.type===4}]">
           <img :src="item.song.album.picUrl" alt="">
           <p class="titles">{{item.song.album.name}}</p>
           <div class="list-author">{{item.song.album.artists[0].name}}</div>
         </li>
         <!-- 推荐mv -->
-        <li v-if="item.type===5" class="type-5">
+        <li v-if="title ==='推荐MV'" class="type-5">
           <img :src="item.picUrl" alt="">
           <p class="titles">{{item.name}}</p>
-          <span  class="type-5-span"><i class="icon-mv"></i> {{(parseInt(item.playCount) / 10000 < 10) ? item.playCount : (item.playCount / 10000).toFixed(0)+'万'}}</span>
+          <span class="type-5-span"><i
+            class="icon-mv"></i> {{(parseInt(item.playCount) / 10000 < 10) ? item.playCount : (item.playCount / 10000).toFixed(0) + '万'}}</span>
           <div class="list-author">{{item.artistName}}</div>
         </li>
       </template>
@@ -74,13 +76,13 @@
       margin-top 15px
       flex-wrap wrap
       justify-content space-between
-      .type-0,.type-4
+      .type-0, .type-4
         width 32.8%
       .type-21
         width 100%
       .type-24, .type-5
         width 49.6%
-      .type-4,.type-5
+      .type-4, .type-5
         .titles
           padding 5px 5px 0 5px
           font-size 12px
@@ -94,7 +96,7 @@
           white-space nowrap
           overflow hidden
           text-overflow ellipsis
-      .type-0, .type-21,.type-24,.type-4,.type-5
+      .type-0, .type-21, .type-24, .type-4, .type-5
         flex 0 0 auto
         position relative
         margin-bottom 12px
@@ -126,7 +128,7 @@
           width 20px
           left 5px
           border 1px solid #bcbcbc
-          background rgba(0,0,0,0.1)
+          background rgba(0, 0, 0, 0.1)
           border-radius 50%
           text-align center
         .type-5-span
@@ -136,7 +138,7 @@
           .icon-mv
             font-size 18px
             vertical-align middle
-        .type-24-span,.type-5-span
+        .type-24-span, .type-5-span
           height 20px
           line-height 23px
           box-sizing border-box
