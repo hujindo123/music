@@ -8,20 +8,19 @@
       </header>
       <div class="nav">
         <div class="nav-title">
-          <router-link to="/recommend"><span>个性推荐</span></router-link>
+          <router-link to="/recommend"><span>音乐</span></router-link>
         </div>
         <div class="nav-title">
-          <router-link to="/listsong"><span>歌单</span></router-link>
+          <router-link to="/listsong"><span>视频</span></router-link>
         </div>
         <div class="nav-title">
-          <router-link to="/station"><span>主播电台</span></router-link>
-        </div>
-        <div class="nav-title">
-          <router-link to="/ranking"><span>排行榜</span></router-link>
+          <router-link to="/station"><span>电台</span></router-link>
         </div>
       </div>
     </div>
-    <router-view></router-view>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
     <v-footer></v-footer>
   </div>
 </template>

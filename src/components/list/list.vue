@@ -4,11 +4,13 @@
     <ul class="list-data" v-if="recommend">
       <template v-for="(item, index) in recommend">
         <!-- 推荐歌单 -->
-        <li v-if="title === '推荐歌单'"class='type-0'>
-          <img :src="item.picUrl" alt="">
-          <p class="list-name">{{item.name}}</p>
-          <span class="type-0-span"><i
-            class="icon-erji"></i> {{(parseInt(item.playCount) / 10000 < 10) ? item.playCount : (item.playCount / 10000).toFixed(0) + '万'}}</span>
+        <li v-if="title === '推荐歌单'" class='type-0'>
+          <router-link :to="'/songList/' + item.id">
+            <img :src="item.picUrl" alt="">
+            <p class="list-name">{{item.name}}</p>
+            <span class="type-0-span"><i
+              class="icon-erji"></i> {{(parseInt(item.playCount) / 10000 < 10) ? item.playCount : (item.playCount / 10000).toFixed(0) + '万'}}</span>
+          </router-link>
         </li>
         <!-- 独家放送 -->
         <li v-if="title === '独家放送'" :class="index === 2 ? 'type-21': 'type-24'">

@@ -11,9 +11,7 @@
 </script>
 
 <style>
-  html, body {
-
-  }
+  @import "../static/css/reset.css";
 
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;

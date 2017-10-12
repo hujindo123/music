@@ -11,17 +11,27 @@
         <h3 class="list_right_dr">{{highquality[0].copywriter}}</h3>
       </div>
     </div>
+    <div class="listsong_type">
+      <div class="listsong_total">
+        全部歌单
+      </div>
+      <div class="listsong_total_rigth">
+        <span>欧美</span><span>摇滚</span><span>民谣</span>
+      </div>
+    </div>
+    <noTitleList :playlist="playlist"></noTitleList>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import {axios} from '@/router/config';
+  import noTitleList from '@/components/list/noTitleList';
   const ERR_OK = 200;
   export default {
     data(){
       return {
-        highquality: [''],
-        a: ''
+        highquality: [],
+        playlist: []
       }
     },
     created(){
@@ -29,15 +39,19 @@
       axios('get', 'top/playlist/highquality', {}, (response) => {
         if (response.code === ERR_OK) {
           this.highquality = response.playlists;
-          console.log(this.highquality)
         }
       });
       axios('get', 'top/playlist', {}, (response) => {
-
+        if (response.code === ERR_OK) {
+          this.playlist = response.playlists;
+        }
       });
       /* this.$axios.get('/api/top/playlist').then((response) => {
        response = response.data;
        })*/
+    },
+    components: {
+      noTitleList
     },
     methods: {}
   }
@@ -77,6 +91,7 @@
           display inline-block
           color #fff
           vertical-align super
+          letter-spacing 2px
         .icon-more
           font-size 23px
           display inline-block
@@ -98,6 +113,33 @@
           overflow hidden
           text-overflow ellipsis
           white-space nowrap
-
-
+    .listsong_type
+      padding 20px 10px
+      .listsong_total
+        width 110px
+        display inline-block
+        box-sizing border-box
+        padding 7px 14px
+        border 1px solid #c9cacb
+        border-radius 15px
+        letter-spacing 2px
+        font-size 15px
+        background url("../../../../static/img/more.png") 80px center no-repeat
+        background-size 18px 18px
+      .listsong_total_rigth
+        padding 7px 0 7px 14px
+        font-size 15px
+        float right
+        span
+          color #646566
+        :after
+          content '|'
+          width 1px
+          margin 0 8px
+          color #e2e3e4
+        :last-child
+          &::after
+            content ''
+            margin 0
+            width 0
 </style>

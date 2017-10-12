@@ -3,6 +3,8 @@ import recommend from '../views/index/components/recommend';
 import listsong from  '../views/index/components/listsong';
 import station from '../views/index/components/station';
 import ranking from '../views/index/components/ranking';
+
+import songList from '../components/songsList/index';
 export default [
   {
     path: '/',
@@ -26,5 +28,10 @@ export default [
         component: ranking
       }
     ]
+  },
+  {
+    path: '/songList/:id', // 歌单列表详情
+    component: songList,
   }
+
 ]
