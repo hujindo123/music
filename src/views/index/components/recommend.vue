@@ -6,15 +6,15 @@
       <v-swiper :banner="banner" :isBanner="IsBanner" class="swipers"></v-swiper>
       <ul class="recommend-nav">
         <li>
-          <div class="i"><i class="icon-fm"></i></div>
+          <div class="i"><i class="iconfont icon-shouyinji"></i></div>
           <p>私人FM</p>
         </li>
         <li>
-          <div class="i"><i class="icon-date"></i><span>15</span></div>
+          <div class="i"><i class="iconfont icon-rili"></i><span>15</span></div>
           <p>每日推荐歌曲</p>
         </li>
         <li>
-          <div class="i"><i class="icon-up"></i></div>
+          <div class="i"><i class="iconfont icon-gupiao"></i></div>
           <p>云音乐热歌榜</p>
         </li>
       </ul>
@@ -161,7 +161,7 @@
             width 50px
             font-size 27px
             border-radius 50%
-            line-height 52px
+            line-height 48px
             box-sizing border-box
             border 1px solid #d33a31
             color #d33a31
@@ -170,7 +170,7 @@
               width 47px
               font-size 12px
               display block
-              line-height 55px
+              line-height 58px
               position absolute
               top 0
           p

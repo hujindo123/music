@@ -4,7 +4,7 @@ import listsong from  '../views/index/components/listsong';
 import station from '../views/index/components/station';
 import ranking from '../views/index/components/ranking';
 
-import songList from '../components/songsList/index';
+import songList from '../views/songsList/index';
 export default [
   {
     path: '/',

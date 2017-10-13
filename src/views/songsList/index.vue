@@ -12,16 +12,31 @@
           </div>
         </div>
       </div>
-      <div class="iconfont icon-pinglun" style="color: #fff"></div>
-      <ul>
+      <ul class="list_top_nav">
         <li>
-          <i class="iconfont icon-pinglun"></i>
-          <span>19975</span>
+          <div class="iconfont icon-tianjiawenjian"></div>
+          <span>{{playlist.subscribedCount}}</span>
         </li>
-        <li><i></i></li>
-        <li><i></i></li>
-        <li><i></i></li>
+        <li><div class="iconfont icon-pinglun"></div>
+          <span>{{playlist.commentCount}}</span></li>
+        <li><div class="iconfont icon-fenxiang"></div>
+          <span>{{playlist.shareCount}}</span></li>
+        <li><div class="iconfont icon-xiazai"></div>
+          <span>下载</span></li>
       </ul>
+    </div>
+    <div class="list_154_main">
+      <div class="list_154_main_top">
+        <i class="iconfont icon-bofang"></i>
+        <span>全部播放 <em> (共45首)</em></span>
+      </div>
+      <div class="list_154_main_list">
+        <i class="iconfont">1</i>
+        <div class="list_sr">
+          <div>为了遇见你</div>
+          <div class="list_sr_author">薛之谦 - 几个薛之谦</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -106,4 +121,70 @@
             display inline-block
             margin-right 5px
             color #d0cdca
+    .list_top_nav
+      width 100%
+      display flex
+      position absolute
+      bottom 5px
+      left 0
+      flex-flow row
+      justify-content space-between
+      align-items center
+      text-align center
+      li
+        color #fff
+        flex 1
+        font-size 13px
+        .iconfont
+          font-size 22px
+          margin-bottom 8px
+        span
+          color #d0ccca
+          font-weight 500
+
+  .list_154_main
+    width 100%
+    box-sizing border-box
+    .list_154_main_top
+      position relative
+      height 50px
+      line-height 50px
+      display flex
+      i
+        width 40px
+        line-height 45px
+        flex 0 0 40px
+        vertical-align middle
+        text-align center
+        font-size 20px
+      span
+        flex 1
+        padding-right 10px
+        display inline-block
+        border-bottom 1px solid #e4e4e5
+        em
+          font-style: normal
+          color #959696
+          font-size 12px
+    .list_154_main_list
+      position relative
+      display flex
+      padding 5px 0
+      height 45px
+      i
+        width 40px
+        line-height 45px
+        flex 0 0 40px
+        vertical-align middle
+        text-align center
+        font-size 20px
+      .list_sr
+        flex 1
+        padding-right 10px
+        display inline-block
+        border-bottom 1px solid #e4e4e5
+        line-height 20px
+        .list_sr_author
+          font-size 12px
+
 </style>

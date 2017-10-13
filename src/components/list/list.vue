@@ -9,14 +9,14 @@
             <img :src="item.picUrl" alt="">
             <p class="list-name">{{item.name}}</p>
             <span class="type-0-span"><i
-              class="icon-erji"></i> {{(parseInt(item.playCount) / 10000 < 10) ? item.playCount : (item.playCount / 10000).toFixed(0) + '万'}}</span>
+              class="iconfont icon-erji"></i> {{(parseInt(item.playCount) / 10000 < 10) ? item.playCount : (item.playCount / 10000).toFixed(0) + '万'}}</span>
           </router-link>
         </li>
         <!-- 独家放送 -->
         <li v-if="title === '独家放送'" :class="index === 2 ? 'type-21': 'type-24'">
           <img :src="item.picUrl" alt="">
           <p class="list-name">{{item.name}}</p>
-          <span class="type-24-span"><i class="icon-mv"></i></span>
+          <span class="type-24-span"><i class="iconfont icon-shipin-copy"></i></span>
         </li>
         <!-- 最新音乐 -->
         <li v-if="title === '最新音乐'" :class="[{'type-4': item.type===4}]">
@@ -29,7 +29,7 @@
           <img :src="item.picUrl" alt="">
           <p class="titles">{{item.name}}</p>
           <span class="type-5-span"><i
-            class="icon-mv"></i> {{(parseInt(item.playCount) / 10000 < 10) ? item.playCount : (item.playCount / 10000).toFixed(0) + '万'}}</span>
+            class="iconfont icon-shipin-copy"></i> {{(parseInt(item.playCount) / 10000 < 10) ? item.playCount : (item.playCount / 10000).toFixed(0) + '万'}}</span>
           <div class="list-author">{{item.artistName}}</div>
         </li>
       </template>
@@ -126,6 +126,8 @@
         .type-0-span
           right 0
           text-align right
+          .iconfont
+            font-size 16px
         .type-24-span
           width 20px
           left 5px
@@ -142,7 +144,7 @@
             vertical-align middle
         .type-24-span, .type-5-span
           height 20px
-          line-height 23px
+          line-height 20px
           box-sizing border-box
           top 5px
           padding 0

@@ -2,9 +2,9 @@
   <div class="all">
     <div class="positionTop">
       <header class="header-wrapper">
-        <div class="header-left"><i class="icon-mike"></i></div>
+        <div class="header-left"><i class="iconfont icon-huatong"></i></div>
         <div class="header-middle"><i class="icon-search"></i>搜索音乐、歌词、电台</div>
-        <div class="header-right"><i class="icon-state"></i></div>
+        <div class="header-right"><i class="iconfont icon-state"></i></div>
       </header>
       <div class="nav">
         <div class="nav-title">
@@ -43,7 +43,7 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  @import "../../assets/css/style.css"
+ /* @import "../../assets/css/style.css"*/
   .all
     width 100%
     height 100%

@@ -1,19 +1,19 @@
 <template>
   <div class="footer">
     <router-link class=" router-link-exact-active footer-li" to="/">
-      <i class="icon-findMusic"></i>
+      <i class="iconfont icon-wangyiyunyinlezizhi-copy"></i>
       <span>发现音乐</span>
     </router-link>
     <router-link class="footer-li" to="/myselfMusic">
-      <i class="icon-myselfMusic"></i>
+      <i class="iconfont icon-yinle"></i>
       <span>我的音乐</span>
     </router-link>
     <router-link class="footer-li" to="/friend">
-      <i class="icon-friend"></i>
+      <i class="iconfont icon-19"></i>
       <span>朋友</span>
     </router-link>
     <router-link class="footer-li" to="/user">
-      <i class="icon-user"></i>
+      <i class="iconfont icon-zhanghao"></i>
       <span>账号</span>
     </router-link>
   </div>
@@ -43,7 +43,10 @@
           font-weight 700
       i
         display block
-        margin 5px 0 4px 0
-        font-size 24px
+        margin 5px 0 5px 0
+        font-size 21px
+        &.icon-19
+          margin-top 2px
+          font-size 24px
 
 </style>
