@@ -47,7 +47,6 @@
   .station
     width 100%
     height auto
-    padding-top 84px
     overflow hidden
     position relative
     .station-nav

@@ -1,9 +1,10 @@
 <template>
-  <div class="recommend">
+  <div>
     <pulse-loader :loading="loading.load" :color="loading.color" :size="loading.size" :margin="loading.margin"
                   :radius="loading.radius" class="loading" v-show="loading.load"></pulse-loader>
     <span v-if="!loading.load" class="recommend_wrapper">
-      <v-swiper :banner="banner" :isBanner="IsBanner" class="swipers"></v-swiper>
+      <v-header></v-header>
+      <v-swiper :banner="banner" :isBanner="IsBanner"></v-swiper>
       <ul class="recommend-nav">
         <li>
           <div class="i"><i class="iconfont icon-shouyinji"></i></div>
@@ -29,6 +30,7 @@
 <script type="text/ecmascript-6">
   import swiper from 'components/swiper/swiper';
   import list from 'components/list/list';
+  import header from 'components/header/header';
   import PulseLoader from 'vue-spinner/src/BeatLoader.vue';
   import {axios} from '@/router/config';
   import {mapState, mapGetters, mapMutations, mapActions} from 'vuex';
@@ -121,6 +123,7 @@
       })
     },
     components: {
+      'v-header': header,
       'v-swiper': swiper,
       'v-list': list,
       'pulse-loader': PulseLoader,
@@ -129,53 +132,49 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  .recommend
+  .loading
+    text-align center
+    margin-top 60px
+  .recommend_wrapper
     width 100%
-    height auto
     padding-top 84px
-    overflow hidden
-    position relative
-    .loading
-      text-align center
-      margin-top 60px
-    .recommend_wrapper
-      width 100%
-      padding-bottom 30px
-      display inline-block
-      .recommend-nav
-        height 100px
-        display flex
-        background-image url(require('../../assets/image/repeat-x.png'))
-        background-repeat repeat-x
-        background-position left bottom
-        background-size auto 1px
-        justify-content space-around
-        li
-          position relative
-          flex 1
-          margin-top 15px
-          text-align center
-          font-size 0
-          .i
-            height 50px
-            width 50px
-            font-size 27px
-            border-radius 50%
-            line-height 48px
-            box-sizing border-box
-            border 1px solid #d33a31
-            color #d33a31
-            margin: 0 auto;
-            span
-              width 47px
-              font-size 12px
-              display block
-              line-height 58px
-              position absolute
-              top 0
-          p
+    padding-bottom 30px
+    display inline-block
+    .recommend-nav
+      height 100px
+      display flex
+      background-image url(require('../../assets/image/repeat-x.png'))
+      background-repeat repeat-x
+      background-position left bottom
+      background-size auto 1px
+      justify-content space-around
+      li
+        position relative
+        flex 1
+        margin-top 15px
+        text-align center
+        font-size 0
+        .i
+          height 50px
+          width 50px
+          font-size 27px
+          border-radius 50%
+          line-height 48px
+          box-sizing border-box
+          border 1px solid #d33a31
+          color #d33a31
+          margin: 0 auto;
+          span
+            width 47px
             font-size 12px
-            line-height 1
-            margin-top 9px
-            color #323233
+            display block
+            line-height 58px
+            position absolute
+            top 0
+        p
+          font-size 12px
+          line-height 1
+          margin-top 9px
+          color #323233
+
 </style>

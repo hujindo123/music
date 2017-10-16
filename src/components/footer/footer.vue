@@ -28,7 +28,7 @@
     width 100%
     height 49px
     display flex
-    z-index 1000
+    z-index 2002
     position fixed
     left 0
     bottom 0

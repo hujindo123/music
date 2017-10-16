@@ -61,7 +61,6 @@
   .recommend
     width 100%
     height auto
-    padding-top 84px
     overflow hidden
     position relative
     .listsong_title

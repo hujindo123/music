@@ -13,8 +13,13 @@ export default [
     children: [
       {
         path: '/recommend', // 个性推荐
-        component: recommend
+        component: recommend,
       },
+      {
+        path: '/songList/:id',
+        component: songList,
+      },
+
       {
         path: '/listsong', // 歌单
         component: listsong
@@ -28,10 +33,6 @@ export default [
         component: ranking
       }
     ]
-  },
-  {
-    path: '/songList/:id', // 歌单列表详情
-    component: songList,
   }
 
 ]
