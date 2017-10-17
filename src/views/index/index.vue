@@ -1,14 +1,17 @@
 <template>
   <div class="all">
-    <keep-alive>
-      <transition name="slide-fade">
-        <router-view></router-view>
-      </transition>
-    </keep-alive>
+    <v-header v-if="this.$store.state.HeadersStatus"></v-header>
+    <div class="recommend_wrapper">
+      <keep-alive>
+        <router-view v-if="!$route.meta.unkeepAlive"></router-view>
+      </keep-alive>
+      <router-view v-if="$route.meta.unkeepAlive"></router-view>
+    </div>
     <v-footer></v-footer>
   </div>
 </template>
 <script type="text/ecmascript-6">
+  import header from 'components/header/header';
   import footer from 'components/footer/footer';
   import * as service from '../../service';
   export default {
@@ -21,23 +24,24 @@
     },
     computed: {},
     components: {
+      'v-header': header,
       'v-footer': footer
     }
   };
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  /* @import "../../assets/css/style.css"*/
   .all
     width 100%
     height 100%
-  .slide-fade-enter-active
-    transition: all 0.2s ease;
-
-  .slide-fade-leave-active
-    transition: all 0.2s ease;
-    opacity 1;
-
-  .slide-fade-enter, .slide-fade-leave-to
-    opacity 0;
+    position relative
+    display flex
+    flex-flow column
+    .recommend_wrapper
+      width 100%
+      flex 1
+      overflow-y scroll
+      -webkit-overflow-scrolling : touch;
+      padding-bottom 30px
+      display inline-block
 </style>

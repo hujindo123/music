@@ -1,5 +1,5 @@
 <template>
-  <div class="station">
+  <span class="station">
     <v-swiper :banner="banner" :isBanner="IsBanner" class="swipers"></v-swiper>
     <div class="station-nav">
       <a href="">
@@ -11,7 +11,7 @@
         电台排行
       </a>
     </div>
-  </div>
+  </span>
 </template>
 
 <script type="text/ecmascript-6">

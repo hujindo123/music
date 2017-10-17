@@ -18,6 +18,9 @@ export default [
       {
         path: '/songList/:id',
         component: songList,
+        meta: {
+          unkeepAlive: true //不需要缓存
+        }
       },
 
       {

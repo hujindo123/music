@@ -3,9 +3,8 @@
  */
 import * as types from './mutations-types';
 export default {
-  [types.ADD_CART](state){
-    console.log(types.ADD_CART);
-    state.score++
+  [types.HIDE_HEADER](state, obj){
+    state.HeadersStatus = obj.HeadersStatus;
   }
 }
 

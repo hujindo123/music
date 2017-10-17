@@ -9,7 +9,7 @@ import actions from './actions'
 Vue.use(Vuex);
 
 var state = {
-  score: 100
+  HeadersStatus: true
 };
 export default new Vuex.Store({
   state,
@@ -17,4 +17,5 @@ export default new Vuex.Store({
   actions,
   mutations,
 });
+
 

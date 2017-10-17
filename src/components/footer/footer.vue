@@ -27,12 +27,10 @@
   .footer
     width 100%
     height 49px
+    flex 0 0 49px
     display flex
-    z-index 2002
-    position fixed
-    left 0
-    bottom 0
     background #363737
+    z-index 200;
     .footer-li
       flex 1
       font-size 11px

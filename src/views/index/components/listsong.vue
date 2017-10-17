@@ -1,5 +1,5 @@
 <template>
-  <div class="recommend">
+  <span>
     <div class="listsong_title" v-if="highquality.length > 0">
       <div class="list_pic">
         <img :src="highquality[0].coverImgUrl" alt="">
@@ -20,11 +20,12 @@
       </div>
     </div>
     <noTitleList :playlist="playlist"></noTitleList>
-  </div>
+  </span>
 </template>
 
 <script type="text/ecmascript-6">
   import {axios} from '@/router/config';
+  import header from 'components/header/header';
   import noTitleList from '@/components/list/noTitleList';
   const ERR_OK = 200;
   export default {
@@ -51,94 +52,90 @@
        })*/
     },
     components: {
-      noTitleList
+      noTitleList,
+      'v-header': header
     },
     methods: {}
   }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  .recommend
-    width 100%
-    height auto
-    overflow hidden
-    position relative
-    .listsong_title
-      box-sizing border-box
-      padding 10px 10px 10px 10px
+  .listsong_title
+    box-sizing border-box
+    padding 10px 10px 10px 10px
+    flex 1
+    display flex
+    background rgba(106, 106, 106, 0.78)
+    .list_pic
+      width 100px
+      height 100px
+      flex 0 0 100px
+      overflow hidden
+      img
+        display block
+        width 100%
+    .list_right
+      padding 5px 0 0 10px
       flex 1
-      display flex
-      background rgba(106, 106, 106, 0.78)
-      .list_pic
-        width 100px
-        height 100px
-        flex 0 0 100px
-        overflow hidden
-        img
-          display block
-          width 100%
-      .list_right
-        padding 5px 0 0 10px
-        flex 1
-        box-sizing border-box
-        overflow hidden
-        .icon
-          width 23px
-          height 23px
-          display inline-block
-        h1
-          display inline-block
-          color #fff
-          vertical-align super
-          letter-spacing 2px
-        .icon-more
-          font-size 23px
-          display inline-block
-          margin-top -15px
-          vertical-align middle
-          color rgba(255, 255, 255, 0.7)
-        .list_right_desc
-          font-size 14px
-          padding 15px 0
-          flex 0 0 1
-          overflow hidden
-          text-overflow ellipsis
-          white-space nowrap
-          color #fff
-        .list_right_dr
-          color #c0c0c1
-          font-size 12px
-          flex 0 0 1
-          overflow hidden
-          text-overflow ellipsis
-          white-space nowrap
-    .listsong_type
-      padding 20px 10px
-      .listsong_total
-        width 110px
+      box-sizing border-box
+      overflow hidden
+      .icon
+        width 23px
+        height 23px
         display inline-block
-        box-sizing border-box
-        padding 7px 14px
-        border 1px solid #c9cacb
-        border-radius 15px
+      h1
+        display inline-block
+        color #fff
+        vertical-align super
         letter-spacing 2px
-        font-size 15px
-        background url("../../../../static/img/more.png") 80px center no-repeat
-        background-size 18px 18px
-      .listsong_total_rigth
-        padding 7px 0 7px 14px
-        font-size 15px
-        float right
-        span
-          color #646566
-        :after
-          content '|'
-          width 1px
-          margin 0 8px
-          color #e2e3e4
-        :last-child
-          &::after
-            content ''
-            margin 0
-            width 0
+      .icon-more
+        font-size 23px
+        display inline-block
+        margin-top -15px
+        vertical-align middle
+        color rgba(255, 255, 255, 0.7)
+      .list_right_desc
+        font-size 14px
+        padding 15px 0
+        flex 0 0 1
+        overflow hidden
+        text-overflow ellipsis
+        white-space nowrap
+        color #fff
+      .list_right_dr
+        color #c0c0c1
+        font-size 12px
+        flex 0 0 1
+        overflow hidden
+        text-overflow ellipsis
+        white-space nowrap
+  .listsong_type
+    padding 20px 10px
+    .listsong_total
+      width 110px
+      display inline-block
+      box-sizing border-box
+      padding 7px 14px
+      border 1px solid #c9cacb
+      border-radius 15px
+      letter-spacing 2px
+      font-size 15px
+      background url("../../../../static/img/more.png") 80px center no-repeat
+      background-size 18px 18px
+    .listsong_total_rigth
+      padding 7px 0 7px 14px
+      font-size 15px
+      float right
+      span
+        color #646566
+      :after
+        content '|'
+        width 1px
+        margin 0 8px
+        color #e2e3e4
+      :last-child
+        &::after
+          content ''
+          margin 0
+          width 0
 </style>

@@ -1,9 +1,8 @@
 <template>
-  <div>
+  <span>
     <pulse-loader :loading="loading.load" :color="loading.color" :size="loading.size" :margin="loading.margin"
                   :radius="loading.radius" class="loading" v-show="loading.load"></pulse-loader>
-    <span v-if="!loading.load" class="recommend_wrapper">
-      <v-header></v-header>
+    <span v-if="!loading.load">
       <v-swiper :banner="banner" :isBanner="IsBanner"></v-swiper>
       <ul class="recommend-nav">
         <li>
@@ -24,13 +23,12 @@
       <v-list :recommend="newsong.slice(0,6)" :title="'最新音乐'"></v-list>
       <v-list :recommend="mv" :title="'推荐MV'"></v-list>
     </span>
-  </div>
+  </span>
 </template>
 
 <script type="text/ecmascript-6">
   import swiper from 'components/swiper/swiper';
   import list from 'components/list/list';
-  import header from 'components/header/header';
   import PulseLoader from 'vue-spinner/src/BeatLoader.vue';
   import {axios} from '@/router/config';
   import {mapState, mapGetters, mapMutations, mapActions} from 'vuex';
@@ -123,7 +121,6 @@
       })
     },
     components: {
-      'v-header': header,
       'v-swiper': swiper,
       'v-list': list,
       'pulse-loader': PulseLoader,
@@ -132,14 +129,6 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  .loading
-    text-align center
-    margin-top 60px
-  .recommend_wrapper
-    width 100%
-    padding-top 84px
-    padding-bottom 30px
-    display inline-block
     .recommend-nav
       height 100px
       display flex

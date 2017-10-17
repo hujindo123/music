@@ -20,16 +20,14 @@
 </template>
 
 <script type="text/ecmascript-6">
-
+  export default {}
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
   .positionTop
-    width: 100%;
-    position: fixed;
-    z-index 2000
-    top 0
-    left 0
+    width 100%
+    flex 0 0 84px
+    z-index 0
     .header-wrapper
       width 100%
       padding 7px 0

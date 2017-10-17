@@ -1,6 +1,8 @@
 <template>
   <div class="songList">
-    <div  v-if="playlist">
+    <pulse-loader :loading="loading.load" :color="loading.color" :size="loading.size" :margin="loading.margin"
+                  :radius="loading.radius" class="loading" v-show="loading.load"></pulse-loader>
+    <div v-if="playlist">
       <div class="list_top_1415">
         <div class="list_top_1415_bg" :style="{background: 'url('+playlist.picUrl+')'}"></div>
         <div class="list_top_1415_top">
@@ -51,16 +53,40 @@
 
 <script type="text/ecmascript-6">
   import {axios} from '@/router/config';
+  import PulseLoader from 'vue-spinner/src/BeatLoader.vue';
   const ERR_OK = 200;
   export default {
     data () {
       return {
+        loading: {
+          color: "#f63",
+          size: '10px',
+          margin: '3px',
+          radius: '50%',
+          load: true
+        },
         playlist: '',
         privileges: '',
       };
     },
     created () {
       this.getList();
+    },
+    beforeRouteEnter(to, from, next){
+      next(vm => {
+        vm.$store.commit('HIDE_HEADER', {
+          HeadersStatus: false
+        });
+      })
+    },
+    beforeRouteLeave (to, from, next){
+      this.$store.commit('HIDE_HEADER', {
+        HeadersStatus: true
+      });
+      next();
+    },
+    components: {
+      'pulse-loader': PulseLoader
     },
     methods: {
       getList () {
@@ -69,6 +95,7 @@
           id: self.$route.params.id
         }, (response) => {
           if (response.code === ERR_OK) {
+            self.loading.load = false;
             self.playlist = response.playlist;
             self.privileges = response.privileges;
           }
@@ -81,12 +108,9 @@
 <style lang="stylus" rel="stylesheet/stylus">
   .songList
     width 100%
-    min-height 100%
-    position absolute
-    left 0
-    top 0
-    z-index 2001
-    background #fff
+    flex 1
+    overflow-y scroll
+    -webkit-overflow-scrolling: touch;
     .list_top_1415
       width 100%;
       height 200px;
