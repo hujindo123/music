@@ -3,6 +3,7 @@ import recommend from '../views/index/components/recommend';
 import listsong from  '../views/index/components/listsong';
 import station from '../views/index/components/station';
 import ranking from '../views/index/components/ranking';
+import play from '../../src/components/play/play.vue';
 
 import songList from '../views/songsList/index';
 export default [
@@ -36,6 +37,10 @@ export default [
         component: ranking
       }
     ]
+  },
+  {
+    path: '/play',
+    component: play
   }
 
 ]
