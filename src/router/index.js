@@ -17,14 +17,6 @@ export default [
         component: recommend,
       },
       {
-        path: '/songList/:id',
-        component: songList,
-        meta: {
-          unkeepAlive: true //不需要缓存
-        }
-      },
-
-      {
         path: '/listsong', // 歌单
         component: listsong
       },
@@ -39,7 +31,14 @@ export default [
     ]
   },
   {
-    path: '/play',
+    path: '/songList/:id',
+    component: songList,
+    meta: {
+      unkeepAlive: true //不需要缓存
+    }
+  },
+  {
+    path: '/play/:id',
     component: play
   }
 

@@ -33,6 +33,8 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import {axios} from '@/router/config';
+  const ERR_OK = 200;
   export default {
     data () {
       return {
@@ -41,11 +43,16 @@
         count: 0,
         timer: '',
         play: true,
-        Media: new Audio()
+        Media: new Audio(),
+        songsMessage: '',
+        songs: ''
       }
     },
     created () {
-      this.readySong();
+      this.songsList = JSON.parse(localStorage.getItem('playList'));
+      console.log(this.songsList);
+      this.getList();
+
     },
     computed: {
       style () {
@@ -53,23 +60,52 @@
       }
     },
     methods: {
-      readySong (){
-        var self = this;
-        this.Media.src = 'http://fs.open.kugou.com/e126f6ad2aeb773b36fc68e31349b494/59e83a68/G106/M07/0F/19/qg0DAFnkd5uAWUDpABAeasVVCPg168.m4a';
-        this.Media.addEventListener("canplaythrough", function () {
-          self.startTime();
+      isWeiXin() {
+        var ua = window.navigator.userAgent.toLowerCase();
+        //console.log(ua);//mozilla/5.0 (iphone; cpu iphone os 9_1 like mac os x) applewebkit/601.1.46 (khtml, like gecko)version/9.0 mobile/13b143 safari/601.1
+        if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      getList () {
+        const self = this;
+        axios('get', 'music/url', {
+          id: self.$route.params.id
+        }, (response) => {
+          if (response.code === ERR_OK) {
+            self.songs = response.data[0];
+            self.readySong();
+          }
         });
       },
+      readySong (){
+        var self = this;
+        self.Media.src = self.songs.url;
+        if (self.Media.preload === 'auto') {
+          if (self.isWeiXin()) {
+            self.play = false;
+            alert(this.play);
+            //console.log("是来自微信内置浏览器")
+          } else {
+            self.startTime();
+            self.Media.play();
+            //console.log("不是来自微信内置浏览器")
+          }
+        }
+      },
       startTime(){
-        this.Media.play();
+        var self = this;
         const time = 3 * 60 * 1000;
         this.max = time;
-        this.timer = setInterval(() => {
-          if (this.value >= time) {
-            clearInterval(this.timer);
+        this.timer = setInterval(function () {
+          if (self.value >= time) {
+            clearInterval(self.timer);
             return;
           }
-          this.value = this.value + 1000;
+          self.value = self.value + 1000;
+          //console.log(self.value);
         }, 1000)
       },
       range(v){
@@ -137,6 +173,11 @@
         top 50%
         margin-top -55px
         overflow hidden
+        img {
+          width 100%
+          display block
+          border-radius 50%
+        }
       }
     }
   }
@@ -156,14 +197,14 @@
         top 50%
         margin-top -75px
         overflow hidden
+        img {
+          width 100%
+          display block
+          border-radius 50%
+        }
       }
     }
   }
-
-  img
-    width 100%
-    display block
-    border-radius 50%
 
   .play_bottom
     width 100%

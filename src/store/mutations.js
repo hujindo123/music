@@ -4,7 +4,7 @@
 import * as types from './mutations-types';
 export default {
   [types.HIDE_HEADER](state, obj){
-    state.HeadersStatus = obj.HeadersStatus;
+    state.play = obj.HeadersStatus;
   }
 }
 

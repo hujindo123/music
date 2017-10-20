@@ -9,7 +9,7 @@ import actions from './actions'
 Vue.use(Vuex);
 
 var state = {
-  HeadersStatus: true
+  play: true
 };
 export default new Vuex.Store({
   state,
