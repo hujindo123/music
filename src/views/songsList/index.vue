@@ -39,12 +39,12 @@
         <div class="list_154_main_list" v-for="(item, index) in playlist.tracks" @click="play(index)">
           <i class="iconfont index">{{index + 1}}</i>
           <div class="list_sr">
-            <div class="songname">{{item.ar[0].name }} - {{ item.al.name}}</div>
+            <div class="songname">{{item.ar[0].name }} - {{ item.name}}</div>
           </div>
         </div>
       </div>
     </div>
-    <playFooter v-if="playlist" v-show="footerPlayShow" :playlist="playlist.tracks" :index="indexs"></playFooter>
+    <playFooter v-if="footerPlayShow" :playlist="playlist.tracks" :index="indexs"></playFooter>
   </div>
 </template>
 
@@ -52,6 +52,7 @@
   import {axios} from '@/router/config';
   import playFooter from '@/components/footer/playFooter';
   import PulseLoader from 'vue-spinner/src/BeatLoader.vue';
+
   const ERR_OK = 200;
   export default {
     data () {
@@ -72,18 +73,18 @@
       this.getList();
     },
     /*beforeRouteEnter(to, from, next){
-      next(vm => {
-        vm.$store.commit('HIDE_HEADER', {
-          HeadersStatus: false
-        });
-      })
-    },
-    beforeRouteLeave (to, from, next){
-      this.$store.commit('HIDE_HEADER', {
-        HeadersStatus: true
-      });
-      next();
-    },*/
+     next(vm => {
+     vm.$store.commit('HIDE_HEADER', {
+     HeadersStatus: false
+     });
+     })
+     },
+     beforeRouteLeave (to, from, next){
+     this.$store.commit('HIDE_HEADER', {
+     HeadersStatus: true
+     });
+     next();
+     },*/
     components: {
       'playFooter': playFooter,
       'pulse-loader': PulseLoader
@@ -97,14 +98,13 @@
           if (response.code === ERR_OK) {
             self.loading.load = false;
             self.playlist = response.playlist;
+            self.$store.dispatch('GET_SONG_LIST', {list: response.playlist.tracks});
           }
         });
       },
       play (index) {
-          console.log(index)
-        this.$store.state.play = true;
         this.footerPlayShow = true;
-        this.indexs = index;
+        this.$store.dispatch('GET_URL', {index: index});
       }
     }
   }

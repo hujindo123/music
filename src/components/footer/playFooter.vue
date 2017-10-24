@@ -9,11 +9,11 @@
         <div class="songauthor">{{playlist[indexs].ar[0].name }}</div>
       </div>
       <div class="footer_action">
-        <i class="iconfont" :class=" isclick ? 'icon-zanting1' : 'icon-bofang-copy'" @click.stop="stop"></i>
+        <i class="iconfont" :class="this.$store.state.playAction.playStatus ? 'icon-zanting1' : 'icon-bofang-copy'" @click.stop="stop"></i>
         <i class="iconfont icon-xiayishou"></i>
       </div>
     </div>
-    <div v-show="iSshow" class="plays">
+    <div v-show="this.$store.state.playAction.playPage" class="plays">
       <play></play>
     </div>
   </div>
@@ -25,13 +25,10 @@
   export default{
     data(){
       return {
-        isclick: true,
         iSshow: false
       };
     },
-    /*
-     *   this.playlist = this.playlist.tracks;
-     this.indexs = index;*/
+    created(){},
     props: {
       playlist: {
         type: Array,
@@ -46,16 +43,18 @@
       play
     },
     methods: {
+        /* footer */
       stop () {
-        this.isclick = !this.isclick;
+        this.isclick = this.$store.commit('LOCKED',{status: !this.$store.state.playAction.playStatus});
       },
+      /* 跳转页面 */
       showPlay(){
-        this.iSshow = true;
+        this.$store.commit('PLAY_PAGE', {status: true});
       }
     },
     computed: {
       playMusic(){
-          console.log(this.$store.state.play)
+        console.log(this.$store.state.play);
         return this.$store.state.play;
       }
     }

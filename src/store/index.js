@@ -3,19 +3,23 @@
  */
 import Vue from 'vue';
 import Vuex from 'vuex';
-import mutations from './mutations';
-import getters from './getters';
-import actions from './actions'
+import base  from './module/actions';
+import playAction from './module/play';
+
 Vue.use(Vuex);
 
-var state = {
-  play: true
-};
+const state = {};
+const mutations = {};
+const actions = {};
+const getters = {};
 export default new Vuex.Store({
   state,
-  getters,
-  actions,
   mutations,
+  actions,
+  getters,
+  modules: {
+    playAction
+  }
 });
 
 

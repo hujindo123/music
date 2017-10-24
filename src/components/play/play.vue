@@ -2,25 +2,23 @@
   <div
     style="background: #ccc;position: relative;width: 100%;height: 100%;overflow: hidden;display: flex;flex-flow: column">
     <div class="song-turn_heade">
-      <div class="back iconfont icon-fanhui"></div>
+      <div class="back iconfont icon-fanhui" @click="hidePage"></div>
       <div class="title">
-        <div>洒下的</div>
-        <span style="font-size: 12px">张宇</span>
+        <div>{{this.$store.state.playAction.songs.songName}}</div>
+        <span style="font-size: 12px">{{this.$store.state.playAction.songs.singeName}}</span>
       </div>
     </div>
     <div class="rotate_song">
       <div class="img">
-        <img
-          src="http://p1.music.126.net/ZF8u_N5jo73RP7FAUSKaaQ==/96757023256481.jpg?imageView&thumbnail=360y360&quality=75&tostatic=0"
-          alt="">
+        <img :src="this.$store.state.playAction.songs.bg" alt="">
       </div>
     </div>
     <div class="play_bottom">
       <div class="time">
-        <span class="start-time">00:00</span>
-        <div class="range"><input type="range" id="myRange" :max="max" :style="{'backgroundSize': style}"
+        <span class="start-time">{{this.$store.state.playAction.songs.runTime}}</span>
+        <div class="range"><input type="range" id="myRange" :max="this.$store.state.playAction.songs.totalTime2" :style="{'backgroundSize': style}"
                                   v-model="value" @change="range(value)"></div>
-        <span class="end-time">04:22</span>
+        <span class="end-time">{{this.$store.state.playAction.songs.totalTime}}</span>
       </div>
       <div class="songs_list"></div>
       <div class="actions_play">
@@ -33,30 +31,20 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import {Driver} from '@/basic/middle';
   import {axios} from '@/router/config';
   const ERR_OK = 200;
   export default {
     data () {
       return {
         value: 0,
-        max: 1,
-        count: 0,
-        timer: '',
         play: true,
-        Media: new Audio(),
-        songsMessage: '',
-        songs: ''
       }
-    },
-    created () {
-      this.songsList = JSON.parse(localStorage.getItem('playList'));
-      console.log(this.songsList);
-      this.getList();
-
     },
     computed: {
       style () {
-        return `${((this.value / this.max) * 100).toFixed(1)}% 100%`;
+          console.log(Driver.runtime);
+        return `${((Driver.runtime / this.$store.state.playAction.songs.totalTime) * 100).toFixed(1)}% 100%`;
       }
     },
     methods: {
@@ -69,24 +57,16 @@
           return false;
         }
       },
-      getList () {
-        const self = this;
-        axios('get', 'music/url', {
-          id: self.$route.params.id
-        }, (response) => {
-          if (response.code === ERR_OK) {
-            self.songs = response.data[0];
-            self.readySong();
-          }
-        });
+      hidePage(){
+        this.$store.commit('PLAY_PAGE', {status: false});
       },
       readySong (){
         var self = this;
+        self.totalTime = moment(this.$store.state.playAction.songs.totalTime).format("mm:ss");
         self.Media.src = self.songs.url;
         if (self.Media.preload === 'auto') {
           if (self.isWeiXin()) {
             self.play = false;
-            alert(this.play);
             //console.log("是来自微信内置浏览器")
           } else {
             self.startTime();
@@ -97,10 +77,8 @@
       },
       startTime(){
         var self = this;
-        const time = 3 * 60 * 1000;
-        this.max = time;
         this.timer = setInterval(function () {
-          if (self.value >= time) {
+          if (self.value >= self.totalTime) {
             clearInterval(self.timer);
             return;
           }
