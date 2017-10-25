@@ -1,6 +1,6 @@
 <template>
   <div
-    style="background: #ccc;position: relative;width: 100%;height: 100%;overflow: hidden;display: flex;flex-flow: column">
+    style="background: #ccc;position: relative;width: 100%;z-index:3000;height: 100%;overflow: hidden;display: flex;flex-flow: column">
     <div class="song-turn_heade">
       <div class="back iconfont icon-fanhui" @click="hidePage"></div>
       <div class="title">
@@ -15,10 +15,23 @@
     </div>
     <div class="play_bottom">
       <div class="time">
-        <span class="start-time">{{this.$store.state.playAction.songs.runTime}}</span>
-        <div class="range"><input type="range" id="myRange" :max="this.$store.state.playAction.songs.totalTime2" :style="{'backgroundSize': style}"
+        <!--
+         playPage: false, //播放页面
+  playStatus: isWeiXin() ? false : true, //播放状态
+  songList: [], //歌曲列表
+  playNum: 0,//播放第几首
+  songs: {
+    singeName: '',
+    totalTime: 0,
+    bg: '',
+    songName: '',
+    runTime: 0,
+  }-->
+        <span class="start-time">{{runTime}}</span>
+        <div class="range"><input type="range" id="myRange" :max="this.$store.state.playAction.songs.totalTime"
+                                  :style="{'backgroundSize': style}"
                                   v-model="value" @change="range(value)"></div>
-        <span class="end-time">{{this.$store.state.playAction.songs.totalTime}}</span>
+        <span class="end-time">{{totalTime}}</span>
       </div>
       <div class="songs_list"></div>
       <div class="actions_play">
@@ -31,20 +44,28 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import {Driver} from '@/basic/middle';
+  import moment from 'moment'
   import {axios} from '@/router/config';
   const ERR_OK = 200;
   export default {
     data () {
       return {
-        value: 0,
-        play: true,
+        value: this.$store.state.playAction.songs.runTime,
+        play: true
       }
     },
     computed: {
+      step (){
+        return this.$store.state.playAction.songs.runTime;
+      },
+      totalTime (){
+        return moment(this.$store.state.playAction.songs.totalTime).format("mm:ss")
+      },
       style () {
-          console.log(Driver.runtime);
-        return `${((Driver.runtime / this.$store.state.playAction.songs.totalTime) * 100).toFixed(1)}% 100%`;
+        return `${((this.$store.state.playAction.songs.runTime / this.$store.state.playAction.songs.totalTime) * 100).toFixed(1)}% 100%`;
+      },
+      runTime(){
+        return moment(this.$store.state.playAction.songs.runTime).format("mm:ss");
       }
     },
     methods: {
@@ -87,7 +108,9 @@
         }, 1000)
       },
       range(v){
-        this.value = parseInt(v);
+          console.log(v)
+        //this.$store.dispatch('SET_RUN_TIME', {num: v});
+//        /console.log(this.$store.state.playAction.songs.totalTime);
       },
       playOrpuase () {
         this.play = !this.play;

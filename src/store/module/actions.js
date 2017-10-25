@@ -7,9 +7,6 @@ const state = {
   play: true
 };
 const mutations = {
-  [types.HIDE_HEADER](state, obj){
-    state.play = obj.HeadersStatus;
-  },
   [types.PLAY_PAGE](state, obj){
     state.iSshow = obj.status;
   }

@@ -2,7 +2,7 @@
   <div class="songList">
     <pulse-loader :loading="loading.load" :color="loading.color" :size="loading.size" :margin="loading.margin"
                   :radius="loading.radius" class="loading" v-show="loading.load"></pulse-loader>
-    <div v-if="playlist" class="main_10_20">
+    <div v-if="playlist && !this.$store.state.playAction.playPage" class="main_10_20">
       <div class="list_top_1415">
         <div class="list_top_1415_bg" :style="{background: 'url('+playlist.picUrl+')'}"></div>
         <div class="list_top_1415_top">
@@ -44,15 +44,18 @@
         </div>
       </div>
     </div>
-    <playFooter v-if="footerPlayShow" :playlist="playlist.tracks" :index="indexs"></playFooter>
+    <play v-if="this.$store.state.playAction.playPage" :runTime="runTime"></play>
+    <playFooter v-if="footerPlayShow"></playFooter>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import {isWeiXin, Driver} from '@/basic/driver';
   import {axios} from '@/router/config';
+  import play from '@/components/play/play'
   import playFooter from '@/components/footer/playFooter';
   import PulseLoader from 'vue-spinner/src/BeatLoader.vue';
-
+  const driver = new Driver();
   const ERR_OK = 200;
   export default {
     data () {
@@ -66,7 +69,7 @@
         },
         footerPlayShow: false,
         playlist: '',
-        indexs: 0
+        runTime: ''
       };
     },
     created () {
@@ -86,6 +89,7 @@
      next();
      },*/
     components: {
+      play,
       'playFooter': playFooter,
       'pulse-loader': PulseLoader
     },
@@ -104,7 +108,8 @@
       },
       play (index) {
         this.footerPlayShow = true;
-        this.$store.dispatch('GET_URL', {index: index});
+        this.$store.commit('PLAY_INDEX_ID', {index: index});
+        driver.getUrl(this.$store.state.playAction.songList[this.$store.state.playAction.playNum].id, this)
       }
     }
   }
