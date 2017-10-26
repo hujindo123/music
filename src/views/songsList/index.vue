@@ -44,13 +44,16 @@
         </div>
       </div>
     </div>
-    <play v-if="this.$store.state.playAction.playPage" :runTime="runTime"></play>
-    <playFooter v-if="footerPlayShow"></playFooter>
+    <transition name="play">
+      <play v-if="this.$store.state.playAction.playPage" :plays="playOrpuase" :changeStep="currentTime" :next="next"
+            :pre="pre"></play>
+    </transition>
+    <playFooter v-if="footerPlayShow" :plays="playOrpuase" :next="next"></playFooter>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import {isWeiXin, Driver} from '@/basic/driver';
+  import {Driver} from '@/basic/driver';
   import {axios} from '@/router/config';
   import play from '@/components/play/play'
   import playFooter from '@/components/footer/playFooter';
@@ -75,19 +78,6 @@
     created () {
       this.getList();
     },
-    /*beforeRouteEnter(to, from, next){
-     next(vm => {
-     vm.$store.commit('HIDE_HEADER', {
-     HeadersStatus: false
-     });
-     })
-     },
-     beforeRouteLeave (to, from, next){
-     this.$store.commit('HIDE_HEADER', {
-     HeadersStatus: true
-     });
-     next();
-     },*/
     components: {
       play,
       'playFooter': playFooter,
@@ -108,8 +98,28 @@
       },
       play (index) {
         this.footerPlayShow = true;
+        if (index < 0 || index > this.$store.state.playAction.songList.length) {
+          index = this.$store.state.playAction.playNum;
+        }
         this.$store.commit('PLAY_INDEX_ID', {index: index});
         driver.getUrl(this.$store.state.playAction.songList[this.$store.state.playAction.playNum].id, this)
+      },
+      /*暂停*/
+      playOrpuase(){
+        this.$store.commit('LOCKED', {status: !this.$store.state.playAction.playStatus});
+        driver.playOrpuase(this.$store.state.playAction.playStatus);
+      },
+      /* 快进 */
+      currentTime (t){
+        driver.Audio.currentTime = t;
+      },
+      /*下一首*/
+      next(){
+        debugger;
+        this.play(this.$store.state.playAction.playNum + 1);
+      },
+      pre(){
+        this.play(this.$store.state.playAction.playNum - 1);
       }
     }
   }
@@ -242,4 +252,12 @@
               overflow hidden
               white-space nowrap
               text-overflow ellipsis
+
+  .play-enter-active
+    transition: all .5s cubic-bezier(0.2,0.4,0.6,1);
+  .play-leave-active
+    transition: all .3s ease;
+  .play-enter, .play-leave-to
+    transform: translateX(100%);
+    opacity: 0;
 </style>

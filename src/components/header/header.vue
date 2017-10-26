@@ -1,19 +1,19 @@
 <template>
   <div class="positionTop">
-    <header class="header-wrapper">
+  <!--  <header class="header-wrapper">
       <div class="header-left"><i class="iconfont icon-huatong"></i></div>
       <div class="header-middle"><i class="icon-search"></i>搜索音乐、歌词、电台</div>
       <div class="header-right"><i class="iconfont icon-state"></i></div>
-    </header>
+    </header>-->
     <div class="nav">
       <div class="nav-title">
-        <router-link to="/recommend"><span>音乐</span></router-link>
+        <router-link to="/recommend"><span>推荐音乐</span></router-link>
       </div>
       <div class="nav-title">
-        <router-link to="/listsong"><span>视频</span></router-link>
+        <router-link to="/listsong"><span>热歌榜</span></router-link>
       </div>
       <div class="nav-title">
-        <router-link to="/station"><span>电台</span></router-link>
+        <router-link to="/station"><span>搜索</span></router-link>
       </div>
     </div>
   </div>
@@ -26,7 +26,7 @@
 <style lang="stylus" rel="stylesheet/stylus">
   .positionTop
     width 100%
-    flex 0 0 84px
+    flex 0 0 40px
     z-index 0
     .header-wrapper
       width 100%
@@ -68,22 +68,29 @@
       position relative
       overflow hidden
       height 40px
+      box-sizing border-box
       background rgba(255, 255, 255, 0.95)
-      .nav-title
+      a
         flex 1
         height 40px
         line-height 40px
         text-align center
-        a
+        &.router-link-exact-active
+          span
+            position relative
+            display block
+            &:after
+              content ''
+              position absolute
+              bottom 0
+              left 0
+              width 100%
+              border-bottom: 3px solid red;
+        .nav-title
           display block
+          color #333
           span
             display inline-block
             line-height 40px
-      .run-li
-        height: 2px
-        background: #d43c33
-        position: absolute
-        bottom: 0
-        transition all 0.3s ease
 
 </style>

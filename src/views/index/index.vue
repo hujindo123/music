@@ -1,21 +1,24 @@
 <template>
   <div class="all">
     <div class="positionTop">
-      <header class="header-wrapper">
-        <div class="header-left"><i class="iconfont icon-huatong"></i></div>
-        <div class="header-middle"><i class="icon-search"></i>搜索音乐、歌词、电台</div>
-        <div class="header-right"><i class="iconfont icon-state"></i></div>
-      </header>
+      <!--   <header class="header-wrapper">
+           <div class="header-left"><i class="iconfont icon-huatong"></i></div>
+           <div class="header-middle"><i class="icon-search"></i>搜索音乐、歌词、电台</div>
+           <div class="header-right"><i class="iconfont icon-state"></i></div>
+         </header>-->
       <div class="nav">
-        <div class="nav-title">
-          <router-link to="/recommend"><span>音乐</span></router-link>
-        </div>
-        <div class="nav-title">
-          <router-link to="/listsong"><span>视频</span></router-link>
-        </div>
-        <div class="nav-title">
-          <router-link to="/station"><span>电台</span></router-link>
-        </div>
+        <router-link to="/recommend">
+          <div class="nav-title"><span>推荐音乐</span>
+          </div>
+        </router-link>
+        <router-link to="/listsong">
+          <div class="nav-title"><span>热歌榜</span></div>
+        </router-link>
+        <router-link to="/station">
+          <div class="nav-title">
+            <span>搜索</span>
+          </div>
+        </router-link>
       </div>
     </div>
     <div class="recommend_wrapper">
@@ -24,11 +27,11 @@
       </keep-alive>
       <router-view v-if="$route.meta.unkeepAlive"></router-view>
     </div>
-  <!--  <v-footer></v-footer>-->
+    <!--  <v-footer></v-footer>-->
   </div>
 </template>
 <script type="text/ecmascript-6">
-  import header from 'components/header/header';
+ /* import header from 'components/header/header';*/
   import footer from 'components/footer/footer';
   import * as service from '../../service';
   export default {
@@ -41,7 +44,7 @@
     },
     computed: {},
     components: {
-      'v-header': header,
+     /* 'v-header': header,*/
       'v-footer': footer
     }
   };
@@ -56,7 +59,7 @@
     flex-flow column
     .positionTop
       width 100%
-      flex 0 0 84px
+      flex 0 0 40px
       z-index 0
       .header-wrapper
         width 100%
@@ -98,29 +101,36 @@
         position relative
         overflow hidden
         height 40px
+        box-sizing border-box
         background rgba(255, 255, 255, 0.95)
-        .nav-title
+        a
           flex 1
           height 40px
           line-height 40px
           text-align center
-          a
+          &.router-link-exact-active
+            span
+              position relative
+              display block
+              &:after
+                content ''
+                position absolute
+                bottom 0
+                left 0
+                width 100%
+                border-bottom: 3px solid red;
+          .nav-title
             display block
+            color #333
             span
               display inline-block
               line-height 40px
-        .run-li
-          height: 2px
-          background: #d43c33
-          position: absolute
-          bottom: 0
-          transition all 0.3s ease
 
   .recommend_wrapper
-      width 100%
-      flex 1
-      overflow-y scroll
-      -webkit-overflow-scrolling : touch;
-      padding-bottom 30px
-      display inline-block
+    width 100%
+    flex 1
+    overflow-y scroll
+    -webkit-overflow-scrolling: touch;
+    padding-bottom 30px
+    display inline-block
 </style>

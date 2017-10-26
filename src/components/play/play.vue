@@ -1,6 +1,6 @@
 <template>
   <div
-    style="background: #ccc;position: relative;width: 100%;z-index:3000;height: 100%;overflow: hidden;display: flex;flex-flow: column">
+    style="background: #ccc;position: absolute;width: 100%;z-index:3000;height: 100%;overflow: hidden;display: flex;flex-flow: column">
     <div class="song-turn_heade">
       <div class="back iconfont icon-fanhui" @click="hidePage"></div>
       <div class="title">
@@ -15,112 +15,87 @@
     </div>
     <div class="play_bottom">
       <div class="time">
-        <!--
-         playPage: false, //播放页面
-  playStatus: isWeiXin() ? false : true, //播放状态
-  songList: [], //歌曲列表
-  playNum: 0,//播放第几首
-  songs: {
-    singeName: '',
-    totalTime: 0,
-    bg: '',
-    songName: '',
-    runTime: 0,
-  }-->
         <span class="start-time">{{runTime}}</span>
-        <div class="range"><input type="range" id="myRange" :max="this.$store.state.playAction.songs.totalTime"
-                                  :style="{'backgroundSize': style}"
-                                  v-model="value" @change="range(value)"></div>
+        <div class="range">
+          <input type="range"
+                 :max="this.$store.state.playAction.songs.totalTime"
+                 :style="{'backgroundSize': style}"
+                 v-model="step"
+                 id="range"
+                 @change="ranger()">
+        </div>
         <span class="end-time">{{totalTime}}</span>
       </div>
       <div class="songs_list"></div>
       <div class="actions_play">
-        <span class="iconfont icon-weibiaoti-"></span>
-        <span class="iconfont" @click="playOrpuase" :class="{'icon-bofang1': play, 'icon-cplay1': !play}"></span>
-        <span class="iconfont icon-weibiaoti-1"></span>
+        <span class="iconfont icon-weibiaoti-" @click.stop="preSong"></span>
+        <span class="iconfont" @click="playOrpuase"
+              :class="{'icon-bofang1': this.$store.state.playAction.playStatus, 'icon-cplay1': !this.$store.state.playAction.playStatus}"></span>
+        <span class="iconfont icon-weibiaoti-1" @click.stop="nextSong"></span>
       </div>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import moment from 'moment'
   import {axios} from '@/router/config';
-  const ERR_OK = 200;
+  import * as moment from 'moment';
   export default {
     data () {
       return {
-        value: this.$store.state.playAction.songs.runTime,
-        play: true
+        value: 0,
+        a: 0
+      }
+    },
+    props: {
+      plays: {
+        type: Function,
+        default: null,
+      },
+      changeStep: {
+        type: Function,
+        default: null,
+      },
+      next: {
+        type: Function,
+        default: null,
+      },
+      pre: {
+        type: Function,
+        default: null,
       }
     },
     computed: {
-      step (){
-        return this.$store.state.playAction.songs.runTime;
+      step(){
+        return this.$store.state.playAction.songs.runTime
       },
       totalTime (){
-        return moment(this.$store.state.playAction.songs.totalTime).format("mm:ss")
+        return moment(this.$store.state.playAction.songs.totalTime * 1000).format("mm:ss");
       },
       style () {
         return `${((this.$store.state.playAction.songs.runTime / this.$store.state.playAction.songs.totalTime) * 100).toFixed(1)}% 100%`;
       },
       runTime(){
-        return moment(this.$store.state.playAction.songs.runTime).format("mm:ss");
+        return moment(this.$store.state.playAction.songs.runTime * 1000).format("mm:ss");
+
       }
     },
     methods: {
-      isWeiXin() {
-        var ua = window.navigator.userAgent.toLowerCase();
-        //console.log(ua);//mozilla/5.0 (iphone; cpu iphone os 9_1 like mac os x) applewebkit/601.1.46 (khtml, like gecko)version/9.0 mobile/13b143 safari/601.1
-        if (ua.match(/MicroMessenger/i) == 'micromessenger') {
-          return true;
-        } else {
-          return false;
-        }
-      },
       hidePage(){
         this.$store.commit('PLAY_PAGE', {status: false});
       },
-      readySong (){
-        var self = this;
-        self.totalTime = moment(this.$store.state.playAction.songs.totalTime).format("mm:ss");
-        self.Media.src = self.songs.url;
-        if (self.Media.preload === 'auto') {
-          if (self.isWeiXin()) {
-            self.play = false;
-            //console.log("是来自微信内置浏览器")
-          } else {
-            self.startTime();
-            self.Media.play();
-            //console.log("不是来自微信内置浏览器")
-          }
-        }
-      },
-      startTime(){
-        var self = this;
-        this.timer = setInterval(function () {
-          if (self.value >= self.totalTime) {
-            clearInterval(self.timer);
-            return;
-          }
-          self.value = self.value + 1000;
-          //console.log(self.value);
-        }, 1000)
-      },
-      range(v){
-          console.log(v)
-        //this.$store.dispatch('SET_RUN_TIME', {num: v});
-//        /console.log(this.$store.state.playAction.songs.totalTime);
+      ranger(){
+        this.step = document.getElementById("range").value;
+        this.changeStep(document.getElementById("range").value);
       },
       playOrpuase () {
-        this.play = !this.play;
-        if (this.play) {
-          this.Media.play();
-          this.startTime();
-        } else {
-          this.Media.pause();
-          clearInterval(this.timer);
-        }
+        this.plays();
+      },
+      nextSong(){
+        this.next();
+      },
+      preSong(){
+        this.pre();
       }
     }
   }

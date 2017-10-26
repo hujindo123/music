@@ -22,12 +22,9 @@ const actions = {
   [types.GET_SONG_LIST] ({state}, obj){
     state.songList = obj.list;
   },
-  [types.SET_RUN_TIME] ({state}, obj){
-    state.songs.runTime = obj.num;
-    //driver.fast(obj.num);
-  },
   [types.GET_RUN_TIME] ({state}, obj){
-    state.songs.runTime = obj.num;
+    state.songs.runTime = obj.currentTime;
+    state.songs.totalTime =  obj.duration;
   }
 };
 const mutations = {

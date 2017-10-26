@@ -9,7 +9,8 @@ function isWeiXin() {
   } else {
     return false;
   }
-}
+};
+
 class Driver {
   constructor() {
     this.ERR_OK = 200;
@@ -21,7 +22,7 @@ class Driver {
     this.currentTime = this.Audio.currentTime;
     this.getUrl = this.getUrl.bind(this);
   }
-
+  /* 搜索地址*/
   getUrl(id, env) {
     var self = this;
     this.$store = env.$store;
@@ -37,23 +38,21 @@ class Driver {
       }
     });
   };
-
+  /* 进度时间 */
   runTime() {
     var self = this;
-    self.Audio.addEventListener('timeupdate',function () {
-      console.log(self.Audio.currentTime);
-      console.log(self.Audio.duration);
-      var progressValue =  self.Audio.currentTime/ self.Audio.duration; //用时间比来获取进度条的值
+    self.Audio.addEventListener('timeupdate', function () {
+      self.$store.dispatch('GET_RUN_TIME', {currentTime: self.Audio.currentTime, duration: self.Audio.duration});
     })
-   /* self.timer = setInterval(() => {
-      self.count = self.count + 1000;
-      self.$store.dispatch('SET_RUN_TIME', {num: self.count});
-    }, 1000)*/
   };
-
-  fast(v) {
-    this.Audio.currentTime = (v / 1000).toFixed(0);
+  /*播放&暂停*/
+  playOrpuase(v) {
+    v ? this.Audio.play() : this.Audio.pause();
+  };
+  /*上一首*/
+  pre(){
 
   }
+  /*下一首*/
 }
 export  {Driver, isWeiXin};
