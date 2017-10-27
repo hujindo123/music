@@ -115,7 +115,6 @@
       },
       /*下一首*/
       next(){
-        debugger;
         this.play(this.$store.state.playAction.playNum + 1);
       },
       pre(){

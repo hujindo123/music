@@ -158,7 +158,7 @@
     }
   }
 
-  @media screen and (min-width: 321px) and (max-width: 400px) {
+  @media screen and (min-width: 321px) {
     .rotate_song {
       width 248px
       height 248px
