@@ -7,8 +7,10 @@
  * */
 export const PLAY_PAGE = 'PLAY_PAGE'; //播放页面
 export const GET_SONG_LIST = 'GET_SONG_LIST';// 播放列表
+export const GET_SONG_LIST_SEARCH = 'GET_SONG_LIST_SEARCH'; //搜索播放列表
 export const LOCKED = 'LOCKED'; //播放开关状态
 export const PLAY_INDEX_ID = 'PLAY_INDEX_ID';// 播放序列id
+export const PLAY_INDEX_ID_SEARCH = 'PLAY_INDEX_ID_SEARCH';
 export const GET_RUN_TIME ='GET_RUN_TIME'; //运行时间
 export  const SET_RUN_TIME ='SET_RUN_TIME';
 

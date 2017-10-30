@@ -78,7 +78,7 @@
 <style lang="stylus" rel="stylesheet/stylus">
   .positionTop
     width 100%
-    flex 0 0 104px
+    height 104px
     position fixed
     display flex
     flex-flow column

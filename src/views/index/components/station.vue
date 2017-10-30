@@ -6,7 +6,8 @@
         <input type="search" v-model="keywords" @keyup="hotSearch" placeholder="搜索歌曲、歌手、专辑">
       </div>
     </div>
-    <div class="com_list" v-if="data1">
+    <!--搜索到的-->
+    <div class="com_list" v-if="data1.artists && !songs">
       <h3 @click="searchSong(keywords)">搜索“{{keywords}}”</h3>
       <ol>
         <li>
@@ -19,15 +20,17 @@
         </li>
       </ol>
     </div>
-    <div class="com_list" v-if="!data1">
+    <!-- 缓存 -->
+    <div class="com_list" v-if="!data1 && !songs && local">
       <ol>
-        <li>
+        <li v-for="(item, index) in local" v-if="item" @click="searchSong(item)">
           <i class="iconfont icon-time"></i>
-          <div class="searchname"><i class="iconfont icon-guanbi"></i></div>
+          <div class="searchname">{{item}}<i class="iconfont icon-guanbi" @click.stop="deleteItem(index)"></i></div>
         </li>
       </ol>
     </div>
-    <div class="search_list_copy">
+    <!-- 搜索列表-->
+    <div class="search_list_copy" v-if="songs.length>0">
       <div class="list_154_main_list" v-for="(item, index) in songs" @click="play(index)">
         <i class="iconfont index">{{index + 1}}</i>
         <div class="list_sr">
@@ -35,12 +38,21 @@
         </div>
       </div>
     </div>
+    <transition name="play">
+      <play v-if="this.$store.state.playAction.playPage" :plays="playOrpuase" :changeStep="currentTime" :next="next"
+            :pre="pre"></play>
+    </transition>
+    <playFooter v-if="footerPlayShow" :plays="playOrpuase" :next="next"></playFooter>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import {Driver} from '@/basic/driver';
   import swiper from 'components/swiper/swiper';
   import {axios} from '@/router/config';
+  import play from '@/components/play/play'
+  import playFooter from '@/components/footer/playFooter';
+  const driver = new Driver();
   const ERR_OK = 200;
   export default {
     data(){
@@ -48,14 +60,20 @@
         keywords: '',
         data1: '',
         songs: '',
+        local: [],
+        footerPlayShow: false,
+        playlist: '',
+        runTime: ''
       }
     },
     created () {
+        debugger;
       /* 获取banner */
-
+      this.getLocal();
     },
     components: {
-      'v-swiper': swiper
+      play,
+      'playFooter': playFooter
     },
     methods: {
       hotSearch(){
@@ -72,17 +90,71 @@
           }, 500)
         } else {
           self.data1 = '';
+          self.songs = '';
         }
       },
       searchSong(v){
         const self = this;
+        self.keywords = v;
+        if (v) {
+          self.getLocal(v);
+        }
         axios('get', '/search', {
           keywords: v
         }, (response) => {
           if (response.code === ERR_OK) {
-           self.songs = response.result.songs
+            self.songs = response.result.songs;
+            self.$store.dispatch('GET_SONG_LIST_SEARCH', {list: self.songs});
           }
         });
+      },
+      deleteItem(idx){
+        var list = localStorage.getItem('list').split(',');
+        list.splice(idx, 1);
+        this.local = list;
+        localStorage.setItem('list', list);
+      },
+      getLocal(v){
+        var set = new Set([]);
+        var list = [];
+        if (localStorage.getItem('list') || v) {
+          if (!localStorage.getItem('list') && v) {
+            localStorage.setItem('list', v);
+            list = localStorage.getItem('list').split(',')
+          } else if (localStorage.getItem('list') && v) {
+            list = localStorage.getItem('list').split(',');
+            list.push(v);
+          } else if (localStorage.getItem('list') && !v) {
+            list = localStorage.getItem('list').split(',');
+          }
+          list.map(x => set.add(x));
+          localStorage.setItem('list', Array.from(set));
+          this.local = localStorage.getItem('list').split(',')
+        }
+      },
+      play (index) {
+        this.footerPlayShow = true;
+        if (index < 0 || index > this.$store.state.playAction.songList.length) {
+          index = this.$store.state.playAction.playNum;
+        }
+        this.$store.commit('PLAY_INDEX_ID_SEARCH', {index: index});
+        driver.getUrl(this.$store.state.playAction.songList[this.$store.state.playAction.playNum].id, this)
+      },
+      /*暂停*/
+      playOrpuase(){
+        this.$store.commit('LOCKED', {status: !this.$store.state.playAction.playStatus});
+        driver.playOrpuase(this.$store.state.playAction.playStatus);
+      },
+      /* 快进 */
+      currentTime (t){
+        driver.Audio.currentTime = t;
+      },
+      /*下一首*/
+      next(){
+        this.play(this.$store.state.playAction.playNum + 1);
+      },
+      pre(){
+        this.play(this.$store.state.playAction.playNum - 1);
       }
     }
   }
@@ -92,8 +164,7 @@
   .station
     width 100%
     height auto
-    overflow hidden
-    position relative
+    z-index 3000
     .search
       width 100%
       box-sizing border-box
@@ -127,6 +198,7 @@
     .com_list
       width 100%
       padding 0 15px
+      box-sizing border-box
       h3
         height 50px
         line-height 50px

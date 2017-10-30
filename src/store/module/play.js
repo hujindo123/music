@@ -22,6 +22,10 @@ const actions = {
   [types.GET_SONG_LIST] ({state}, obj){
     state.songList = obj.list;
   },
+  [types.GET_SONG_LIST_SEARCH] ({state}, obj){
+    state.songList = obj.list;
+  },
+
   [types.GET_RUN_TIME] ({state}, obj){
     state.songs.runTime = obj.currentTime;
     state.songs.totalTime =  obj.duration;
@@ -39,6 +43,13 @@ const mutations = {
     state.songs.singeName = state.songList[state.playNum].ar[0].name;
     state.songs.totalTime = state.songList[state.playNum].dt;
     state.songs.bg = state.songList[state.playNum].al.picUrl;
+    state.songs.songName = state.songList[state.playNum].name;
+  },
+  [types.PLAY_INDEX_ID_SEARCH](state, obj){
+    state.playNum = obj.index;
+    state.songs.singeName = state.songList[state.playNum].artists[0].name;
+    state.songs.totalTime = state.songList[state.playNum].duration;
+    state.songs.bg = state.songList[state.playNum].artists[0].picUrl;
     state.songs.songName = state.songList[state.playNum].name;
   }
 

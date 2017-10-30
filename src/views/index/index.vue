@@ -1,12 +1,14 @@
 <template>
   <div class="all">
-    <v-header></v-header>
-    <div class="desc" style="">
-      <i class="iconfont  icon-lineCD"></i>
-      欢迎使用网易云音乐
-    </div>
     <div class="recommend_wrapper">
+      <img src="../../assets/image/logo.png" alt="" style="width: 50px;display:block">
+      <v-header></v-header>
+      <div class="desc" style="">
+        <i class="iconfont  icon-lineCD"></i>
+        欢迎使用网易云音乐
+      </div>
       <keep-alive>
+
         <router-view v-if="!$route.meta.unkeepAlive"></router-view>
       </keep-alive>
       <router-view v-if="$route.meta.unkeepAlive"></router-view>
@@ -41,19 +43,21 @@
     position relative
     display flex
     flex-flow column
-    .desc
-      height 104px
-      text-align center
-      line-height: 104px
-      font-size: 14px
-      .icon-lineCD
-        vertical-align middle
-        font-size 17px
     .recommend_wrapper
       width 100%
-      flex 1
+      height 100%
       overflow-y scroll
       -webkit-overflow-scrolling: touch;
       padding-bottom 30px
+      z-index 3000
+      top 0
       display inline-block
+      .desc
+        height 104px
+        text-align center
+        line-height: 104px
+        font-size: 14px
+        .icon-lineCD
+          vertical-align middle
+          font-size 17px
 </style>
