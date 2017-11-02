@@ -49,7 +49,7 @@ const mutations = {
     state.playNum = obj.index;
     state.songs.singeName = state.songList[state.playNum].artists[0].name;
     state.songs.totalTime = state.songList[state.playNum].duration;
-    state.songs.bg = state.songList[state.playNum].artists[0].picUrl;
+    state.songs.bg = state.songList[state.playNum].album.blurPicUrl;
     state.songs.songName = state.songList[state.playNum].name;
   }
 

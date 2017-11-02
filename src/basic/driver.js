@@ -20,8 +20,10 @@ class Driver {
     //this.duration = 0;
     this.$store = '';
     this.currentTime = this.Audio.currentTime;
+    this.songs = '';
     this.getUrl = this.getUrl.bind(this);
   }
+
   /* 搜索地址*/
   getUrl(id, env) {
     var self = this;
@@ -34,10 +36,12 @@ class Driver {
         if (this.Audio.preload === 'auto') {
           self.Audio.play();
           self.runTime();
+          self.lyric(id);
         }
       }
     });
   };
+
   /* 进度时间 */
   runTime() {
     var self = this;
@@ -45,14 +49,30 @@ class Driver {
       self.$store.dispatch('GET_RUN_TIME', {currentTime: self.Audio.currentTime, duration: self.Audio.duration});
     })
   };
+
   /*播放&暂停*/
   playOrpuase(v) {
     v ? this.Audio.play() : this.Audio.pause();
   };
+
+  /*歌词*/
+  lyric(id) {
+    var self = this;
+    axios('get', '/lyric', {
+      id: id
+    }, (response) => {
+      if (response.code === this.ERR_OK) {
+        self.songs = response.lrc.lyric
+        console.log(self.songs);
+      }
+    });
+  }
+
   /*上一首*/
-  pre(){
+  pre() {
 
   }
+
   /*下一首*/
 }
 export  {Driver, isWeiXin};

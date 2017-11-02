@@ -12,5 +12,4 @@ export const LOCKED = 'LOCKED'; //播放开关状态
 export const PLAY_INDEX_ID = 'PLAY_INDEX_ID';// 播放序列id
 export const PLAY_INDEX_ID_SEARCH = 'PLAY_INDEX_ID_SEARCH';
 export const GET_RUN_TIME ='GET_RUN_TIME'; //运行时间
-export  const SET_RUN_TIME ='SET_RUN_TIME';
 

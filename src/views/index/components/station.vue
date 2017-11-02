@@ -67,7 +67,6 @@
       }
     },
     created () {
-        debugger;
       /* 获取banner */
       this.getLocal();
     },

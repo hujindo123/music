@@ -1,7 +1,6 @@
 <template>
   <div class="all">
     <div class="recommend_wrapper">
-      <img src="../../assets/image/logo.png" alt="" style="width: 50px;display:block">
       <v-header></v-header>
       <div class="desc" style="">
         <i class="iconfont  icon-lineCD"></i>

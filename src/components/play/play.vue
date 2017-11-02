@@ -104,6 +104,8 @@
   .play_main
     background: #ccc;
     position: absolute;
+    display flex
+    flex-flow column
     top:0;
     width: 100%;
     z-index:3000;

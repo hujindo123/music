@@ -55,18 +55,18 @@
       <div class="topfr"><span class="f-bd f-bd-full topbton">下载APP</span></div>
     </div>
     <div class="nav">
-      <router-link to="/recommend">
+      <a href="/recommend">
         <div class="nav-title"><span>推荐音乐</span>
         </div>
-      </router-link>
-      <router-link to="/listsong">
+      </a>
+      <a href="/listsong">
         <div class="nav-title"><span>热歌榜</span></div>
-      </router-link>
-      <router-link to="/station">
+      </a>
+      <a href="/station">
         <div class="nav-title">
           <span>搜索</span>
         </div>
-      </router-link>
+      </a>
     </div>
   </div>
 </template>
