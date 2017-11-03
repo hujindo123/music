@@ -44,11 +44,7 @@
         </div>
       </div>
     </div>
-    <transition name="play">
-      <play v-if="this.$store.state.playAction.playPage" :plays="playOrpuase" :changeStep="currentTime" :next="next"
-            :pre="pre"></play>
-    </transition>
-    <playFooter v-if="footerPlayShow" :plays="playOrpuase" :next="next"></playFooter>
+    <playFooter v-if="footerPlayShow"></playFooter>
   </div>
 </template>
 
@@ -71,8 +67,7 @@
           load: true
         },
         footerPlayShow: false,
-        playlist: '',
-        runTime: ''
+        playlist: ''
       };
     },
     created () {
@@ -92,33 +87,23 @@
           if (response.code === ERR_OK) {
             self.loading.load = false;
             self.playlist = response.playlist;
-            self.$store.dispatch('GET_SONG_LIST', {list: response.playlist.tracks});
           }
         });
       },
       play (index) {
+        this.$store.commit('PLAY_INDEX_ID', {index: index, playlist: this.playlist.tracks});
+        this.$store.commit('LOCKED', {status: false});
         this.footerPlayShow = true;
-        if (index < 0 || index > this.$store.state.playAction.songList.length) {
-          index = this.$store.state.playAction.playNum;
-        }
-        this.$store.commit('PLAY_INDEX_ID', {index: index});
-        driver.getUrl(this.$store.state.playAction.songList[this.$store.state.playAction.playNum].id, this)
-      },
-      /*暂停*/
-      playOrpuase(){
-        this.$store.commit('LOCKED', {status: !this.$store.state.playAction.playStatus});
-        driver.playOrpuase(this.$store.state.playAction.playStatus);
+        /* this.footerPlayShow = true;
+         if (index < 0 || index > this.$store.state.playAction.songList.length) {
+         index = this.$store.state.playAction.playNum;
+         }
+         this.$store.commit('PLAY_INDEX_ID', {index: index});
+         driver.getUrl(this.$store.state.playAction.songList[this.$store.state.playAction.playNum].id, this)*/
       },
       /* 快进 */
       currentTime (t){
         driver.Audio.currentTime = t;
-      },
-      /*下一首*/
-      next(){
-        this.play(this.$store.state.playAction.playNum + 1);
-      },
-      pre(){
-        this.play(this.$store.state.playAction.playNum - 1);
       }
     }
   }
@@ -253,9 +238,11 @@
               text-overflow ellipsis
 
   .play-enter-active
-    transition: all .5s cubic-bezier(0.2,0.4,0.6,1);
+    transition: all .5s cubic-bezier(0.2, 0.4, 0.6, 1);
+
   .play-leave-active
     transition: all .3s ease;
+
   .play-enter, .play-leave-to
     transform: translateX(100%);
     opacity: 0;

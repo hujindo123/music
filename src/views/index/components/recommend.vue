@@ -129,41 +129,41 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-    .recommend-nav
-      height 100px
-      display flex
-      background-image url(require('../../assets/image/repeat-x.png'))
-      background-repeat repeat-x
-      background-position left bottom
-      background-size auto 1px
-      justify-content space-around
-      li
-        position relative
-        flex 1
-        margin-top 15px
-        text-align center
-        font-size 0
-        .i
-          height 50px
-          width 50px
-          font-size 27px
-          border-radius 50%
-          line-height 48px
-          box-sizing border-box
-          border 1px solid #d33a31
-          color #d33a31
-          margin: 0 auto;
-          span
-            width 47px
-            font-size 12px
-            display block
-            line-height 58px
-            position absolute
-            top 0
-        p
+  .recommend-nav
+    height 100px
+    display flex
+    background-image url(require('../../assets/image/repeat-x.png'))
+    background-repeat repeat-x
+    background-position left bottom
+    background-size auto 1px
+    justify-content space-around
+    li
+      position relative
+      flex 1
+      margin-top 15px
+      text-align center
+      font-size 0
+      .i
+        height 50px
+        width 50px
+        font-size 27px
+        border-radius 50%
+        line-height 48px
+        box-sizing border-box
+        border 1px solid #d33a31
+        color #d33a31
+        margin: 0 auto;
+        span
+          width 47px
           font-size 12px
-          line-height 1
-          margin-top 9px
-          color #323233
+          display block
+          line-height 58px
+          position absolute
+          top 0
+      p
+        font-size 12px
+        line-height 1
+        margin-top 9px
+        color #323233
 
 </style>

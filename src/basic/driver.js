@@ -2,32 +2,33 @@
  * Created by Administrator on 2017/10/24.
  */
 import {axios} from '@/router/config';
-function isWeiXin() {
-  var ua = window.navigator.userAgent.toLowerCase();
-  if (ua.match(/MicroMessenger/i) == 'micromessenger') {
-    return true;
-  } else {
-    return false;
-  }
-};
+var isweixin = function () {
+  var ua = navigator.userAgent.toLowerCase();
 
+  if (ua.match(/MicroMessenger/i) == "micromessenger") {
+
+    return true;
+
+  } else {
+
+    return false;
+
+  }
+}
 class Driver {
-  constructor() {
+  constructor(audio) {
     this.ERR_OK = 200;
-    this.Audio = new Audio();
-    this.count = 0;
-    this.timer = '';
-    //this.duration = 0;
-    this.$store = '';
-    this.currentTime = this.Audio.currentTime;
-    this.songs = '';
+    this.Audio = audio;
+    this.playStatus = false; //播放状态
+    this.duration = 0;
+    this.currentTime = 0;
+    this.songs = []; //歌词
     this.getUrl = this.getUrl.bind(this);
   }
 
   /* 搜索地址*/
-  getUrl(id, env) {
+  getUrl(id) {
     var self = this;
-    this.$store = env.$store;
     axios('get', 'music/url', {
       id: id
     }, (response) => {
@@ -46,12 +47,22 @@ class Driver {
   runTime() {
     var self = this;
     self.Audio.addEventListener('timeupdate', function () {
-      self.$store.dispatch('GET_RUN_TIME', {currentTime: self.Audio.currentTime, duration: self.Audio.duration});
+      self.currentTime = self.Audio.currentTime;
+      self.duration = self.Audio.duration
     })
+  };
+
+  ranger(v) {
+    console.log(v)
+    this.Audio.currentTime = v;
+    /*this.step = document.getElementById("range").value;
+     this.changeStep(document.getElementById("range").value);*/
   };
 
   /*播放&暂停*/
   playOrpuase(v) {
+    alert(v);
+    alert(this.Audio);
     v ? this.Audio.play() : this.Audio.pause();
   };
 
@@ -62,17 +73,24 @@ class Driver {
       id: id
     }, (response) => {
       if (response.code === this.ERR_OK) {
-        self.songs = response.lrc.lyric
-        console.log(self.songs);
+        response.lrc.lyric.split('\n').map(function (i) {
+          // body...
+          //console.log(moment(this.driver.currentTime * 1000).format("mm:ss.SSS"));
+          self.songs.push({
+            time: i.split(']')[0].split('[')[1],
+            songs: i.split(']')[1]
+          })
+        });
+        //console.log(self.songs);
       }
     });
-  }
+  };
 
-  /*上一首*/
-  pre() {
+  preSong() {
 
-  }
+  };
 
-  /*下一首*/
+  nextSong() {
+  };
 }
-export  {Driver, isWeiXin};
+export  {Driver, isweixin};

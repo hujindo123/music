@@ -3,7 +3,6 @@
  */
 import Vue from 'vue';
 import Vuex from 'vuex';
-import base  from './module/actions';
 import playAction from './module/play';
 
 Vue.use(Vuex);
