@@ -15,9 +15,6 @@ export default [
       {
         path: '/recommend', // 个性推荐
         component: recommend,
-        meta: {
-          unkeepAlive: true //不需要缓存
-        }
       },
       {
         path: '/listsong', // 歌单

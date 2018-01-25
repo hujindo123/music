@@ -4,7 +4,7 @@
 import Axios from 'axios';
 import qs from 'qs';
 const ajax = Axios.create({
-  baseURL: 'http://172.16.0.61:3000'
+  baseURL: 'http://172.16.0.71:3000'
 });
 ajax.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 const axios = (method, path, data, callback) => {

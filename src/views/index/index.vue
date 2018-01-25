@@ -6,6 +6,9 @@
         <i class="iconfont  icon-lineCD"></i>
         欢迎使用网易云音乐
       </div>
+      <tab>
+        <tabItem :tabItem="tabItem" v-for="(item, index) in tabItem" :key="index" v-on:on-item-click="tab(index)">{{item}}</tabItem>
+      </tab>
       <keep-alive>
         <router-view v-if="!$route.meta.unkeepAlive"></router-view>
       </keep-alive>
@@ -16,18 +19,26 @@
 </template>
 <script type="text/ecmascript-6">
   import header from 'components/header/header';
+  import tab from 'components/tab/tab';
+  import tabItem from 'components/tab/tabItem';
   import footer from 'components/footer/footer';
   import * as service from '../../service';
   export default {
     data() {
-      return {};
+      return {
+        tabItem: ['推荐音乐', '热歌榜', '搜索']
+      };
     },
     methods: {
-      /* 顶部导航切换 */
+      tab(i){
+        console.log(i);
+      }
 
     },
     computed: {},
     components: {
+      tab,
+      tabItem,
       'v-header': header,
       'v-footer': footer
     }

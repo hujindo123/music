@@ -3,13 +3,17 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import axios from 'axios'
+//import Cube from 'cube-ui'
 import VueScroller from 'vue-scroller';
 import App from './App'
 import store from './store/'
 import routes from './router/'
 
+
+
 Vue.use(VueRouter)
 Vue.use(VueScroller)
+//Vue.use(Cube)
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 
